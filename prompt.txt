@@ -1,8 +1,8 @@
-I want you to debloat my Xiaomi / MediaTek Android TV (Android 10 and older) via ADB.
+I want you to debloat my Android TV via ADB.
 Goal: Remove bloatware, disable unused factory apps, speed up the TV, and fix the Home button and HDMI input switching quirks. You will run the commands and briefly explain to me what you are doing.
 
 MY TV
-- Brand/Model: Xiaomi / MediaTek Android TV (Android 10 or older)
+- Brand/Model: YOUR_TV_BRAND_AND_MODEL_HERE
 - IP Address: YOUR_IP_HERE
 - "Developer options" and "USB debugging" are enabled. My computer and the TV are on the same Wi-Fi.
 

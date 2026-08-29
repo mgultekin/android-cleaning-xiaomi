@@ -16,7 +16,7 @@ Go to **Settings → Device Preferences → Developer options** and turn on **US
 Go to **Settings → Network & Internet → Status**. Note down the IP address (e.g., `192.168.1.50`). Make sure your computer is on the same network.
 
 ### 4. Open your AI Agent and paste the prompt
-Copy the text from [`prompt.txt`](./prompt.txt), replace `YOUR_IP_HERE` with your TV's IP, and paste it into your AI agent. The agent will handle the rest: connecting to your TV, suggesting apps to disable, and safely applying the changes.
+Copy the text from [`prompt.txt`](./prompt.txt), replace `YOUR_IP_HERE` with your TV's IP, replace `YOUR_TV_BRAND_AND_MODEL_HERE` with your specific TV model, and paste it into your AI agent. The agent will handle the rest: connecting to your TV, suggesting apps to disable, and safely applying the changes.
 
 ## ⚠️ Three Important Warnings
 
