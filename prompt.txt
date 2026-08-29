@@ -1,0 +1,46 @@
+I want you to debloat my Xiaomi / MediaTek Android TV (Android 10 and older) via ADB.
+Goal: Remove bloatware, disable unused factory apps, speed up the TV, and fix the Home button and HDMI input switching quirks. You will run the commands and briefly explain to me what you are doing.
+
+MY TV
+- Brand/Model: Xiaomi / MediaTek Android TV (Android 10 or older)
+- IP Address: YOUR_IP_HERE
+- "Developer options" and "USB debugging" are enabled. My computer and the TV are on the same Wi-Fi.
+
+RULES (Follow strictly)
+1. NEVER UNINSTALL. Only use `pm disable-user --user 0 <package>`. Everything must be reversible via `pm enable`. Do NOT use `pm uninstall` on system packages.
+2. NO ROOT OR CUSTOM ROMS. This breaks Widevine L1 DRM permanently. We only disable packages.
+3. MEASURE BEFORE & AFTER. Run `dumpsys meminfo | grep -E "Total RAM|Free RAM|Used RAM"` and `pm list packages -d` before starting. Save them. Do this again at the end.
+4. BATCHES OF 10. Disable max 10 packages at a time, then STOP. Ask me to test: Inputs/Source button, HDMI switching, streaming apps, audio, and keyboard. Do not proceed until I approve.
+5. NEVER DISABLE THE FOLLOWING:
+   - `*.hotkey.dispatcher` (MediaTek) -> Remote's Inputs/Source button.
+   - `*.tvinput`, `*.tv.service`, `*.tv.agent`, `*.tv.factory` -> HDMI / tuner services.
+   - `*.wwtv.tvcenter` -> Renders HDMI passthrough.
+   - `com.google.android.tv.remote.service` -> Remote control service.
+   - `com.google.android.gms`, `com.google.android.gsf`, `com.android.vending` -> Play Services/Store.
+   - `com.android.location.fused` -> Boot-loop trigger.
+   - `com.google.android.inputmethod.latin` -> Keyboard.
+   - `com.android.shell` -> ADB connection.
+   - `com.google.android.permissioncontroller` -> Role management.
+   - Core packages: `android`, `com.android.systemui`, `com.android.tv.settings`, bluetooth stack, `webview`, `settings` providers.
+   If unsure, ASK ME.
+6. LOGGING. Keep a `changelog.md` locally of what you disable and why.
+
+STEPS TO EXECUTE
+a) Check if `adb` is installed on my machine. If not, install it. Connect to my TV via `adb connect YOUR_IP_HERE:5555`. Ask me to accept the prompt on the TV.
+b) Gather initial metrics (`meminfo` and disabled packages).
+c) Find bloatware (`pm list packages`). Look for: `*factorytest`, `*setupwraith`, telemetry, analytics, screensavers (`com.google.android.backdrop` - also run `settings put secure screensaver_enabled 0`), recommendations (`tvrecommendations`), floatingframe, demo, intelligence. Group them and show me a table before disabling.
+d) Speed up UI animations:
+   settings put global window_animation_scale 0.5
+   settings put global transition_animation_scale 0.5
+   settings put global animator_duration_scale 0.5
+e) Clear caches: `pm trim-caches 1G`
+f) Reboot the TV.
+
+CHANGE LAUNCHER (Quirk handling)
+g) Help me install Projectivy Launcher (`com.spocky.projengmenu`). Do not use FLauncher because it lacks HDMI input switching support.
+h) Set it as default home: `cmd role add-role-holder android.app.role.HOME com.spocky.projengmenu` and `pm set-home-activity`.
+i) Fix the Home Button Quirk: Disable ALL competing launchers (stock Google launcher, PatchWall, etc.) until only Projectivy is left. Otherwise, the physical home button will open the old launcher.
+j) Reboot and verify.
+
+FINISHING UP
+Provide a before/after RAM comparison, a list of disabled packages with a 1-sentence explanation, and a 1-line command to revert all changes.
